@@ -41,6 +41,7 @@ const healthFailureURL =        process.env.FAILED_HEALTH_URL || null;
 const metricsJSONPath =         process.env.METRICS_JSON_PATH || null;
 const functionBuiltIns =        parseParam(process.env.FUNCTION_BUILT_INS, []);
 const functionExternals =       parseParam(process.env.FUNCTION_EXTERNALS, []);
+const clearPages =              parseParam(process.env.CLEAR_PAGES, false);
 
 const maxQueueLength = queueLength + maxConcurrentSessions;
 
@@ -69,5 +70,6 @@ new BrowserlessServer({
   rejectAlertURL,
   timeoutAlertURL,
   token,
+  clearPages
 })
 .startServer();

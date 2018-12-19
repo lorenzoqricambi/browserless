@@ -31,4 +31,5 @@ export interface IChromeServiceConfiguration {
   enableCors: boolean;
   enableXvfb: boolean;
   token: string | null;
+  clearPages: boolean;
 }

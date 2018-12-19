@@ -413,9 +413,10 @@ export class ChromeService {
 
   private async reuseChromeInstance(browser: puppeteer.Browser) {
     sysdebug('Clearing browser for reuse');
-
-    const openPages = await browser.pages();
-    openPages.forEach((page) => page.close());
+    if(this.config.clearPages){
+      const openPages = await browser.pages();
+      openPages.forEach((page) => page.close());
+    }
     this.chromeSwarm.push(Promise.resolve(browser));
 
     return sysdebug(`Chrome swarm: ${this.chromeSwarmSize} online`);
