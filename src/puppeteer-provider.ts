@@ -406,6 +406,10 @@ export class ChromeService {
 
   private getChrome(opts: puppeteer.LaunchOptions): Promise<puppeteer.Browser> {
     const canUseChromeSwarm = _.isEqual(opts, defaultLaunchArgs);
+    jobdebug(`canUseChromeSwarm: ${canUseChromeSwarm}`);
+    jobdebug(`Opts: ${JSON.stringify(opts)}`);
+    jobdebug(`defaultLaunchArgs: ${JSON.stringify(defaultLaunchArgs)}`);
+    
     const launchPromise = canUseChromeSwarm ? this.chromeSwarm.shift() : this.launchChrome(opts);
 
     return launchPromise as Promise<puppeteer.Browser>;
@@ -415,7 +419,9 @@ export class ChromeService {
     sysdebug('Clearing browser for reuse');
     if(this.config.clearPages){
       const openPages = await browser.pages();
+      sysdebug('Closing pages');
       openPages.forEach((page) => page.close());
+      sysdebug('Closed pages');
     }
     this.chromeSwarm.push(Promise.resolve(browser));
 
